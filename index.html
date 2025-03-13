@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Puzzles</title>
-    
-    <!-- External CSS -->
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+    <!-- Chessboard.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
 
     <style>
@@ -31,11 +33,28 @@
     <div id="board"></div>
     <button id="nextPuzzle" class="btn btn-primary" style="margin-top: 15px;">Next Puzzle</button>
 
-    <!-- External JavaScript -->
+    <!-- jQuery (Must Load First) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Chess.js (Must Load Before Chessboard.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.2/chess.min.js"></script>
+
+    <!-- Chessboard.js (Board Rendering Library) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
-    <script src="script.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+        $(document).ready(function () {
+            var board = Chessboard('board', {
+                position: 'start',
+                draggable: true
+            });
+
+            $('#nextPuzzle').click(function () {
+                board.position('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'); // Reset to start position
+            });
+        });
+    </script>
 
 </body>
 </html>
