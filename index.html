@@ -4,53 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Puzzles</title>
-
-    <!-- Bootstrap CSS -->
+    
+    <!-- External CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <!-- Chessboard.js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
 
     <style>
+        body {
+            text-align: center;
+            padding: 20px;
+        }
         #board {
-            max-width: 600px;
+            width: 400px;
             margin: 20px auto;
         }
         #status {
-            text-align: center;
             font-size: 1.2em;
             margin: 10px 0;
-        }
-        #controls {
-            text-align: center;
-            margin: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="board" style="width: 400px"></div>
-        <div id="status">Loading puzzle...</div>
-        <div id="controls">
-            <button id="nextPuzzle" class="btn btn-primary">Next Puzzle</button>
-        </div>
-    </div>
+    <h1>Chess Puzzles</h1>
+    <div id="status">Loading puzzle...</div>
+    <div id="board"></div>
+    <button id="nextPuzzle" class="btn btn-primary" style="margin-top: 15px;">Next Puzzle</button>
 
-    <!-- jQuery -->
+    <!-- External JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Chess.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.2/chess.min.js"></script>
-    <!-- Chessboard.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.js"></script>
-    <!-- Your Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
     <script src="script.js"></script>
-
-    <script>
-        var board = Chessboard('board', {
-            draggable: true,
-            position: 'start'
-        });
-    </script>
 
 </body>
 </html>
