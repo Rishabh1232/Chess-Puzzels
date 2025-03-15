@@ -1,9 +1,7 @@
-
 // Debug: Confirm script is loading
 console.log("Script.js started!");
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Debug: Confirm DOM is ready
     console.log("DOM fully loaded");
     
     // Initialize Chess.js
@@ -16,26 +14,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize chessboard
     const board = ChessBoard('board', {
         pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
-        draggable: true
+        draggable: true,
+        onDrop: (source, target) => {  // Added move handler
+            const move = currentGame.move({
+                from: source,
+                to: target,
+                promotion: 'q'
+            });
+            
+            if (!move) return 'snapback';
+            
+            // Add your move validation logic here
+            console.log("Move made:", move.san);
+        }
     });
 
-    // Debug: Confirm chessboard exists
     console.log("Chessboard initialized:", board);
+
+    // Game state variables
+    let currentGame = null;
+    let currentPuzzle = null;
 
     // Load puzzles
     fetch('puzzles.json')
         .then(response => {
             console.log("Fetch status:", response.status);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.json();
         })
         .then(puzzles => {
             console.log("Puzzles loaded:", puzzles);
-            // Simple test: Load first puzzle
-            const firstPuzzle = puzzles[0];
-            const game = new Chess(firstPuzzle.fen);
-            board.position(firstPuzzle.fen);
+            if (!puzzles.length) throw new Error("No puzzles found");
+            
+            // Load first puzzle
+            currentPuzzle = puzzles[0];
+            currentGame = new Chess(currentPuzzle.fen);
+            
+            // Validate FEN before positioning
+            if (!currentGame.validate_fen(currentGame.fen()).valid) {
+                throw new Error("Invalid FEN in puzzle");
+            }
+            
+            board.position(currentGame.fen());
         })
         .catch(error => {
             console.error("Error:", error);
+            document.getElementById('status').textContent = error.message;
         });
-}); // <-- Properly closed DOMContentLoaded
+});
