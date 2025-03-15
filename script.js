@@ -4,6 +4,10 @@ console.log("Script.js started!");
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded");
     
+    // Game state variables
+    let currentGame = null;
+    let currentPuzzle = null;
+
     // Initialize Chess.js
     const Chess = window.Chess;
     if (!Chess) {
@@ -15,25 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = ChessBoard('board', {
         pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
         draggable: true,
-        onDrop: (source, target) => {  // Added move handler
+        onDrop: (source, target) => {
             const move = currentGame.move({
                 from: source,
                 to: target,
                 promotion: 'q'
             });
-            
             if (!move) return 'snapback';
-            
-            // Add your move validation logic here
             console.log("Move made:", move.san);
         }
     });
 
     console.log("Chessboard initialized:", board);
-
-    // Game state variables
-    let currentGame = null;
-    let currentPuzzle = null;
 
     // Load puzzles
     fetch('puzzles.json')
@@ -51,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentGame = new Chess(currentPuzzle.fen);
             
             // Validate FEN before positioning
-            if (!currentGame.validate_fen(currentGame.fen()).valid) {
+            if (!currentGame.validateFen(currentGame.fen()).valid) {
                 throw new Error("Invalid FEN in puzzle");
             }
             
