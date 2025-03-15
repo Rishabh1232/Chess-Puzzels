@@ -1,3 +1,4 @@
+
 // Debug: Confirm script is loading
 console.log("Script.js started!");
 
@@ -37,4 +38,4 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error("Error:", error);
         });
-});
+}); // <-- Properly closed DOMContentLoaded
